@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'appli1/CSS/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'appli1/CSS/bootstrap.min.css' %}">
+    <!-- Custom CSS -->
+    <style>
+        .form-signin {
+            max-width: 400px;
+            padding: 15px;
+            margin: auto;
+        }
+        .form-signin .form-floating:focus-within {
+            z-index: 2;
+        }
+        .form-signin input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+        .form-signin .checkbox {
+            font-weight: 400;
+        }
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+    </style>
+</head>
+<body class="text-center">
+    <main class="form-signin">
+        <form method="post">
+            {% csrf_token %}
+            <img class="mb-4 rounded-circle" src="{% static 'appli1/IMAGE/logo2.jpeg' %}" alt="" width="82" height="87">
+            <h1 class="h3 mb-3 fw-normal">Veuillez vous connecter</h1>
+
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <div class="form-floating py-2">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+            <div class="form-floating py-4">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
+            
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="remember_me"> Se souvenir de moi
+                </label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Se connecter</button>
+            <p>You don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+            <p class="mt-5 mb-3 text-muted">&copy; 2024</p>
+        </form>
+    </main>
+</body>
+</html>

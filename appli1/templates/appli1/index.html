@@ -1,0 +1,301 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'appli1/CSS/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'appli1/CSS/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'appli1/CSS/style.css' %}">
+    <style>
+      body{
+        background-color: darkcyan;
+          
+      }
+      .B{
+          cursor: pointer;
+          background-color: bisque;
+          border: 3px solid black;
+          }
+          .font-we{
+            font-weight: bolder;
+            font-style: italic;
+
+          }
+      a{
+            text-decoration: none;
+          }
+           .content {
+      display: none;
+    }
+    .sp{
+        cursor: pointer;
+        background-color: white;
+    }
+    .sph:hover{
+        font-weight: bolder;
+    }
+    </style>
+</head>
+<body>
+  
+  <!-- l'entete du site-->
+  <header class="p-3 text-bg-info>
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-1 justify-content-center mb-md-0">
+          <img src="{% static 'appli1/IMAGE/logo21.jpeg' %}" alt="" class="rounded-circle" width="100" height="100" srcset="">
+             <h1><li><a href="#" class="nav-link px-2 text-light font-we">BUSINESS DANG CHAP CHAP</a></li></h1>
+         
+        </ul>
+
+        <form id="searchForm" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" method="get" action="{% url 'index' %}">
+          <input type="search" name="search" id="search" value="{{ request.GET.search }}" class="form-control form-control-warning text-bg-info" placeholder="Search..." aria-label="Search">
+          <button class="btn btn-outline-info"  onclick="showContent(4);handleSearch(event);" type="submit">Search</button>
+        </form>
+
+        <div class="text-end">
+          
+          <button type="button" class="btn btn-info me-2"><a href="{% url 'login' %}" style="text-decoration: none; color:black;" >Login</a></button>
+          <button type="button" class="btn btn-info text-dark"><a href=" {% url 'signup' %}" style="text-decoration: none; color:black;">Sign up</a></button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- les element de la selection-->
+  <div class="container-fluid text-bg-secondary text-center py-2">
+    <div class="row align-items-center text-dark sp">
+      <div class="col sph" onclick="location.reload()">Tout Voir</div>
+      <div class="col sph" onclick="showContent(1)" >Ordinateurs</div>
+      <div class="col sph" onclick="showContent(2)" >Telephones</div>
+      <div class="col sph" onclick="showContent(3)" >Vetements</div>
+    </div>
+</div>
+
+<!-- zone de carroussel-->
+
+<div id="carouselExampleControls" class="carousel slide text-bg-info"  data-bs-ride="carousel">
+  <div class="carousel-inner w-20">
+    <div class="carousel-item active" >
+      <div class="carousel-caption text-dark text-end">
+        <h1 class="">BUSINESS DANG C'EST VOTRE SITE</h1>
+        <h1>PROPERER DANS LE BUSINESS EN LIGNE</h1>
+        <p><a class="btn btn-lg btn-primary" href="#">Voir Plus</a></p>
+      </div>
+      <img src="{% static 'appli1/IMAGE/blazer2.png' %}" class="d-block " style="height: 300px "alt="...">
+    </div>
+    <div class="carousel-item active" >
+      <img src="{% static 'appli1/IMAGE/f-img-2.4.png' %}" class="d-block " style="height: 300px "alt="...">
+    </div>
+    <div class="carousel-item">
+      <div class="carousel-caption text-dark text-end">
+        <h1 class="">DECOUVRIR LES NOUVEAU CLIENTS</h1>
+        <h1>RETOUVER TOUTES SORTES DE MARCHANDISE ICI</h1>
+        <p><a class="btn btn-lg btn-primary" href="#">Voir Plus</a></p>
+      </div>
+      <img src="{% static 'appli1/IMAGE/product-4.png' %}" class="d-block " style="height: 300px" alt="...">
+    </div>
+    <div class="carousel-item">
+      <div class="carousel-caption text-dark text-end">
+        <h1 class="">PRENEZ LE PLAISIR DANS LA VENTE</h1>
+        <h1>RETOUVER TOUTES SORTES DE MARCHANDISE ICI</h1>
+        <p><a class="btn btn-lg btn-primary" href="#">Voir Plus</a></p>
+      </div>
+      <img src="{% static 'appli1/IMAGE/air2.png' %}" class="d-block " style="height: 300px" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+
+
+
+</div>
+
+
+<!-- le main principale du projet -->
+ 
+    
+   
+ 
+
+ <main class="p-3">
+  <div class="container marketing">
+    <div id="message">
+      <div class="row text-center">
+
+        {% for product in products %}
+        <div class="col-md-4 py-2">
+       
+          <div class="card" style="width: 18rem;">
+            <img src="{{ product.image.url }}" class="card-img-top img-fluid" style="height: 200px;object-fit: cover;" alt="images">
+            <div class="card-body">
+            <h5 class="card-title">Titre:{{ product.title }}</h5>
+            <p class="card-text">Detail:{{ product.description }}</p>
+            <strong><p class="card-text text-success">Prix:{{ product.price }}Fcfa</p></strong>
+            <p class="card-text">Date:{{ product.created_at }}</p>
+            <p class="card-text">status:{{ product.status }}</p>
+            <a href="{% url 'login' %}" class="btn btn-primary">Acheter</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+     </div>
+   </div>
+
+   <div id="content1" class="content text-light">
+      <div class="row text-center">
+
+        {% for ordi in ordinateur %}
+          <div class="col-md-4 py-2">
+            <div class="card" style="width: 18rem;">
+                <img src="{{ ordi.image.url }}" class="card-img-top img-fluid" style="height: 200px;object-fit: cover;" alt="images">
+                <div class="card-body">
+                <h5 class="card-title">Titre:{{ ordi.title }}</h5>
+                <p class="card-text">Detail:{{ ordi.description }}</p>
+                <p class="card-text text-success">Prix:{{ ordi.price }}$</p>
+                <p class="card-text">Date:{{ ordi.created_at }}</p>
+                <p class="card-text">status:{{ ordi.status }}</p>
+                <a href="{% url 'login' %}" class="btn btn-primary">Acheter</a>
+                </div>
+            </div>
+          </div>
+        {% endfor %}
+     </div>
+    </div>
+
+
+    
+    
+    <div id="content2" class="content text-light">
+        <div class="row text-center">
+
+            {% for tel in telephone %}
+              <div class="col-md-4 py-2">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ tel.image.url }}" class="card-img-top img-fluid" style="height: 200px;object-fit: cover;" alt="images">
+                    <div class="card-body">
+                    <h5 class="card-title">Titre:{{ tel.title }}</h5>
+                     <p class="card-text">Detail:{{ tel.description }}</p>
+                    <p class="card-text text-success">Prix:{{ tel.price }}$</p>
+                    <p class="card-text">Date:{{ tel.created_at }}</p>
+                    <p class="card-text">status:{{ tel.status }}</p>
+                    <a href="{% url 'login' %}" class="btn btn-primary">Acheter</a>
+                    </div>
+                </div>
+              </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div id="content3" class="content text-light">
+        <div class="row text-center">
+
+            {% for vet in vetement %}
+              <div class="col-md-4 py-2">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ vet.image.url }}" class="card-img-top img-fluid" style="height: 200px;object-fit: cover;" alt="images">
+                    <div class="card-body">
+                    <h5 class="card-title">Titre:{{ vet.title }}</h5>
+                     <p class="card-text">Detail:{{ vet.description }}</p>
+                    <p class="card-text text-success">Prix:{{ vet.price }}$</p>
+                    <p class="card-text">Date:{{ vet.created_at }}</p>
+                    <p class="card-text">status:{{ vet.status }}</p>
+                    <a href="{% url 'login' %}" class="btn btn-primary">Acheter</a>
+                    </div>
+                </div>
+              </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <div id="content4" class="content text-light">
+      
+        <div class="row text-center" id="searchResults"> 
+         {% if prod_search %}
+            {% for prod_s in prod_search %}
+              <div class="col-md-4 py-2">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ prod_s.image.url }}" class="card-img-top img-fluid" style="height: 200px;object-fit: cover;" alt="images">
+                    <div class="card-body">
+                    <h5 class="card-title">Titre:{{ prod_s.title }}</h5>
+                     <p class="card-text">Detail:{{ prod_s.description }}</p>
+                    <p class="card-text text-success">Prix:{{ prod_s.price }}$</p>
+                    <p class="card-text">Date:{{ prod_s.created_at }}</p>
+                    <p class="card-text">status:{{ prod_s.status }}</p>
+                    <a href="{% url 'login' %}" class="btn btn-primary">Acheter</a>
+                    </div>
+                </div>
+              </div>
+            {% endfor %}
+          
+            {% else %}
+                <h1 style="color: red;">Aucun Produit de ce genre</h1>
+            {% endif %}
+        </div>
+        
+        
+    </div>
+
+
+</div>
+
+    
+ </main>
+
+
+
+
+  <footer class="py-3  text-white text-bg-secondary">
+    <p class="text-center text-body-white">&copy; 2024 Company, Inc</p>
+  </footer>
+
+
+
+
+
+
+    <script src="{% static 'appli1/JS/bootstrap.js' %}"></script>
+    <script src="{% static 'appli1/JS/bootstrap.min.js' %}"></script>
+    <script src="{% static 'appli1/JS/jquery-3.7.1.slim.min.js' %}"></script>
+    <script src="{% static 'appli1/JS/popper.min.js' %}"></script> 
+    <script src="{% static 'appli1/JS/bootstrap.js' %}"></script>
+    <script src="{% static 'appli1/JS/bootstrap.bundle.min.js' %}"></script>
+    <script src="JS/script.js"></script>
+
+
+    <script>
+  function showContent(contentNumber) {
+    // Masquer le message de départ
+    var message = document.getElementById('message');
+    message.style.display = 'none';
+
+    // Masquer tous les contenus
+    var contents = document.getElementsByClassName('content');
+    for (var i = 0; i < contents.length; i++) {
+      contents[i].style.display = 'none';
+    }
+
+    // Afficher le contenu sélectionné
+    var selectedContent = document.getElementById('content' + contentNumber);
+    selectedContent.style.display = 'block';
+  }
+
+  function handleSearch(event) {
+    event.preventDefault();
+   
+  }
+</script>
+</body>
+</html>
